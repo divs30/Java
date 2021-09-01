@@ -449,7 +449,7 @@ class Product {
 
  ==========
 
-constructor Chaining with class
+constructor Chaining within class
 
 class Mobile extends Product {
  	Mobile() {
@@ -463,3 +463,126 @@ class Mobile extends Product {
  }
 
 =========================
+
+Methods and Inheritance
+
+ 
+class Product {
+	public double getPrice() {
+		return 100;
+	}
+ }
+
+ class Mobile extends Product {
+ 	public double getPrice() {
+		return 999;
+	}
+
+	public String getConnectivity() {
+		return "4G";
+	}
+ }
+=============
+
+// immutable
+
+public class Tv extends Product {
+	private String screenType;
+
+	public Tv() {
+	}
+
+	public Tv(int id, String name, double price, String screenType) {
+		super(id, name, price);
+		this.screenType = screenType;
+	}
+
+	public String getScreenType() {
+		return screenType;
+	}
+}
+
+===========
+
+Array of primitive
+
+int[] data = new int[3];
+
+		Product[] products = new Product[500]; // Array of 5 Pointers
+		products[0] = new Tv(133, "Sony Bravia", 135000.00, "LED"); // upcasting
+		products[1] = new Mobile(453, "MotoG", 12999.00, "4G");
+		products[2] = new Tv(634, "Onida Thunder", 3500.00, "CRT");
+		products[3] = new Mobile(621, "iPhone XR", 99999.00, "4G");
+		products[4] = new Mobile(844, "Oppo", 9999.00, "4G");
+		products[5] = new Microwave(..);
+		products[6] = new WashingMachine(...);
+		products[7] = new DishWasher(...);
+		....
+
+ 
+// OCP ==> Closed for Change; open for extension
+	private static void printExpensive(Product[] products) {
+		for(Product p : products) {
+			if(p.isExpensive()) { // Polymorphic ; dynamic binding ==> Runtime binding
+				System.out.println(p.getName() + " is expensive!!!");
+			} else {
+				System.out.println(p.getName() + " is not expensive!!!");
+			}
+		}
+	}
+
+1) Upcasting 
+ Product[] products = new Product[500]; 
+
+ Mobile[] mobiles = ...
+ Tv[] tvs = ...
+
+
+ for(Mobile p : mobiles) {
+			if(p.isExpensive()) { // Polymorphic ; dynamic binding ==> Runtime binding
+				System.out.println(p.getName() + " is expensive!!!");
+			} else {
+				System.out.println(p.getName() + " is not expensive!!!");
+			}
+		}
+
+
+ for(Tv p : tvs) {
+			if(p.isExpensive()) { // Polymorphic ; dynamic binding ==> Runtime binding
+				System.out.println(p.getName() + " is expensive!!!");
+			} else {
+				System.out.println(p.getName() + " is not expensive!!!");
+			}
+		}
+
+========================
+
+1) Read about NamingConventions in Java
+2) Different types of Comments in Java
+
+3) 
+Time.java
+public class Time {
+	private int hrs;
+	private int min;
+	...
+}
+
+
+TimeExample.java
+
+public class TimeExample {
+	public static void main(String[] args) {
+		Time t1 = new Time(4,30); // 4 hours and 30 min
+		Time t2 = new Time(3,45); 
+
+		Time t3 = Time.addTime(t1, t2);
+
+		System.out.println(t1.getHrs() + " : " + t1.getMin()); // 4: 30
+		System.out.println(t2.getHrs() + " : " + t2.getMin()); // 3: 45
+		System.out.println(t3.getHrs() + " : " + t3.getMin()); // 8: 15
+	}
+}
+
+===============================
+
