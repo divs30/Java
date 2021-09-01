@@ -288,11 +288,178 @@ System.out.println(rahulAcc.getCount()); // valid ==> changes to Account.getCoun
 
 ====================
 
+Relationship between Objects:
+1) Generalization and Specialization ==> IS A Relationship
+2) Realization
+3) Association ==> HAS A Relationship
+4) Uses A relationship
+
+int getId()
+String getName()
+double getPrice()
+
+void setPrice(double price){ 
+}
+
+===================
+
+Java Development tools
+1) Maven
+2) checkstyle
+3) PMD / Spotbugs/ FindBugs
+4) SONAR
+5) Jenkins CI/CD
+6) GIT
+
+1) Checkstyle is a static code analysis tool 
+Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard.
+	==> NamingConventions
+	==> Comments
+	==> proper empty spaces 
+
+2) PMD / Spotbugs/ FindBugs
+PMD is an open source static source code analyzer that reports on issues found within application code.
+
+if(condition){
+
+} else {
+	code
+}
+
+try {
+
+} catch(Exception ex){}
+
+Unreachable code
+
+copy and Paste Detection
+
+============
+
+Mobile in my Pocket which has TataSky app
+
+==============================================
+
+ Generalization and Specialization ==> IS A Relationship
+
+ Programming world we call this as Inheritance
+ In Java we use "extends" keyword for Inheritance
+
+// implicitly extends Object
+ class Product {
+
+ }
+
+ class Mobile extends Product {
+
+ }
+
+ class Tv extends Product {
+
+ }
+
+===========================================================
+
+constructors and Inheritance:
+
+class Object{
+	Object(){}
+}
+
+class Product {
+	Product() {
+		"P1"
+	}
+
+	Product(int id, String name) {
+		"P2"
+	}
+ }
+
+ class Mobile extends Product {
+ 	Mobile() {
+ 		"M1"
+ 	}
+
+ 	Mobile(int id, String name, String connectivity) {
+ 		"M2"
+ 	}
+ }
+=========
+
+compiled code:
+
+
+class Object{
+	Object(){}
+}
+
+class Product {
+	Product() {
+		super();
+		"P1"
+	}
+
+	Product(int id, String name) {
+		super();
+		"P2"
+	}
+ }
+
+ class Mobile extends Product {
+ 	Mobile() {
+ 		super();
+ 		"M1"
+ 	}
+
+ 	Mobile(int id, String name, String connectivity) {
+ 		super();
+ 		"M2"
+ 	}
+ }
+
+============
 
 
 
+class Object{
+	Object(){}
+}
 
+class Product {
+	Product() {
+		"P1"
+	}
 
+	Product(int id, String name) {
+		"P2"
+	}
+ }
 
+ class Mobile extends Product {
+ 	Mobile() {
+ 		"M1"
+ 	}
 
+ 	Mobile(int id, String name, String connectivity) {
+ 		super(id,name);
+ 		"M2"
+ 	}
+ }
 
+ ==========
+
+constructor Chaining with class
+
+class Mobile extends Product {
+ 	Mobile() {
+ 		this(0,"","");
+ 		"M1"
+ 	}
+
+ 	Mobile(int id, String name, String connectivity) {
+  		"M2"
+ 	}
+ }
+
+=========================
