@@ -54,3 +54,179 @@ bash terminal> mysql -u "root" -p
 mysql> exit
 
 ========================================================
+
+OOP ==> Object Oriented Programming
+	Writing programs which resemble real world
+	Tv, AC, Laptop, Fan, Bulb, ...
+
+	Every Object has state [ temp, volume, channel, fan speed] and behaviour [On(), off(),
+	increase(), decrease(), ..]
+
+	BankingAccount 
+		state ==> accNo, balance
+		debit(), credit(), interest(), checkBalance()
+
+	---
+
+	Objects take messages /actions / behaviour ==> exposed thro interface
+
+	================
+
+	SOLID design Principles
+
+	S ==> Single Responsibility
+		  [ UI Object ==> good at accepting data and display part]
+		  [ Object ==> Database ==> CRUD ==> CREATE, READ, UPDATE and DELETE]
+	
+	O ==> Open Close Principle
+		 Closed for Change and open for extension	
+	
+	L ==> Liskov Substitution Principle
+		  Generalization and Specialization relationship [ inheritance ]	
+
+	I ==> Interface segregation
+
+	D ==> Dependency Injection
+		Inversion Of Control
+
+	========================================
+
+	Java?
+		==> platform ==> Java Runtime Environment + APIs [ most of them are integration APIs]
+		==> bytecode runs on Java Platform
+
+		Bytecode ==> compiled code
+
+		Development Kit is required to generate bytecode
+
+		1) JDK ==> Java Development Kit ==> Java as programming language
+			Source Code [ file.java] ==> javac ==> file.class [ bytecode]
+		2) Scala ==> sdk
+				  file.scala ==> scalac ==> file.class
+		3) Groovy
+				groovyc
+
+		=====
+
+		Bytecode uses APIs present in Java Platform for execution
+		Bytecode is not self-contained
+
+		c, c++ ==> exe ==> self contained
+===========================================
+
+Java Programming language:
+	primitive data types
+	1) byte ==> 1 byte of memory
+		byte b = 100;
+	2) short ==> 2 bytes
+		short s = 100;
+	3) int ==> 4 bytes
+		int x = 100;
+
+	4) long ==> 8 bytes
+		long l = 100L;
+
+	5) float ==> 4 bytes
+		float f = 1.4f;
+
+	6) double ==> 8 bytes
+		double d = 1.4;
+
+
+	7) boolean ==> 1 byte
+		boolean flag = true;
+	8) char ==> 2 bytes ==> unicode character set [ 2306 ==> Devangiri script]
+				0-255 ASCII charaset
+
+		char ch = 'A';
+
+=============================================================================
+ 
+$ java --version
+openjdk 11 2018-09-25
+
+open eclipse
+ Help ==> About
+
+===========================================
+
+Account.java
+
+public class Account {
+	private double balance; // state of object 
+
+	public void deposit(double amt) {
+		this.balance += amt;
+	}
+
+	public double getBalance() {
+		return this.balance;
+	}
+}
+
+
+javac Account.java ==> Account.class
+
+Example.java
+
+public class Example {
+	public static void main(String[] args) {
+		Account rahulAcc = new Account();
+		Account swethaAcc = new Account();
+		rahulAcc.deposit(5000);
+		swethaAcc.deposit(8000);
+		System.out.println(rahulAcc.getBalance());
+	}
+}
+
+javac Example.java ==> Example.class	
+
+java Example
+
+
+============================
+
+Logically grouping of objects in enterprise application development
+1) entity / domain / model
+	Business data ==> data which is long lived ==> beyond life of application
+	Customer, Vehicle, Driver, Trip, ... ==> stored in persistence storage ==> RDBMS/NoSQL
+	Employee
+	Entity classes <===> Storage [ RDBMS table ]
+	fields ==> columns in table
+
+2) DAO => 	Data Access Object
+	CRUD operations are written in DAO
+	insert into, select , update, delete
+
+3) Business objects
+
+4) Service ==> facade over business and DAO
+
+5) UI ==> user interface classes 
+
+===============
+
+in java we use "package" to Logically grouping of objects/classes
+
+Package are folder
+com.adobe.aem.entity
+
+com ==> adobe ==> aem ==> entity
+
+Customer.java
+User.java
+
+com.adobe.aem.dao
+	CustomerDao.java
+
+com.adobe.aem.ui
+	Client.java
+
+==================================
+
+
+
+
+
+
+
