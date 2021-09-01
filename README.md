@@ -223,6 +223,72 @@ com.adobe.aem.ui
 	Client.java
 
 ==================================
+ 
+new, state ==> instance variables ==> heap area for every object
+
+instance methods ==> invoked using object context obj.method()
+
+bulb.on()
+tv.on();
+tv.changeChannel(404);
+
+========================
+
+Memory Allocation is done using "new" keyword
+
+code running on Virtual Machine / engine uses GC ==> Garbage Collector to release memory
+
+C ==> malloc() and free(ptr)
+C++ ==> new ...  and release by delete ptr;
+
+In Java we don't release memory
+
+swethaAcc = null; // i don't need that memory making it eligible for GC
+
+=============================
+
+* constructor
+==> special methods called when object is created
+new Account();
+
+==> same name as that of class
+
+==> No explicit return type; not even void
+
+==> Compiler creates default constructor if we don't define any.
+
+=============================
+
+Requirement: need to track how many accounts are created
+
+
+public class Account {
+	private double balance; // state of object ==> instance variables 
+	private static int count = 0;
+	
+	//default constructor
+	public Account() {
+		this.balance = 0.0;
+		count++;
+	}
+	
+	// parameterized constructor
+	public Account(double amt) {
+		this.balance = amt;
+		count++;
+	}
+
+==============
+
+static methods can't have "this" because context is class and not object
+
+System.out.println(Account.getCount()); // 4
+
+System.out.println(rahulAcc.getCount()); // valid ==> changes to Account.getCount()
+
+====================
+
+
 
 
 
