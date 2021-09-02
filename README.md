@@ -641,3 +641,143 @@ abstract methods ==> forces all inherited concrete classes to implement the meth
 * if a class has abstract methods ==> class should be marked as abstract
 * abstract class need not have abstract methods
 
+==============================================================
+
+Realization Relationship
+
+Object/Component will realize the behaviour specified by other in order to communicate
+
+interface is used for Realization relationship:
+
+interface ProductDao {
+	void addProduct(Product p);
+	Product getProduct(int id);
+}
+
+Why Program to interface?
+* DESIGN
+* IMPLEMENTATION
+* TESTING
+* INTEGRATION
+* LOOSE COUPLING
+
+
+Development ==> common modules are created first [ entity classes and interfaces] ==> "jar" file
+
+"jar" files are shared between development groups
+
+===================================
+extends => Specialization
+
+implements ==> Realization
+
+public class MobileDaoDBImpl implements MobileDao {
+
+==================
+
+interface can't have state and behaviour
+abstract class can have state and behaviour common to all inherited members
+
+====
+Issue with this code:
+MobileDao mobileDao = new MobileDaoMongoImpl(); // loose coupling ==> Strategy Pattern
+
+1) switching between strategies is done in client code
+2) Heterogenous clients [ web, mobile, standalone, ...]
+3) No abstraction in client code
+
+Solution:
+* use Factory Pattern
+* factories manufacture objects
+
+=======
+
+class PlantFactory {
+
+	public static Plants[] getPlants(String season) {
+		switch(season) {
+			case "SUMMER": ..
+			case "RAINY" : ..
+			case "WINTER": ..
+		}
+	}
+}
+
+
+Plants[] plants = PlantFactory.getPlants("SUMMER");
+
+=============
+
+
+Switching between strategies is happing in Factory instead of Client:
+* every time to switch between strategies Factory class gets changed instead of many clients
+
+public class MobileDaoFactory {
+	// factory method
+	public static MobileDao getMobileDao() {
+		return new MobileDaoMongoImpl();
+	}
+}
+
+* ===> Need to switch between strategies without changing any line of Java code
+
+* ==> by using configuration files [ xml / json / properties]
+
+XML ==> JAXB library
+JSON ==> Jackson , Jettison , Moxy
+
+==============
+
+config.properties
+
+MOBILE_DAO=com.adobe.prj.dao.impl.MobileDaoDbImpl
+
+
+* Classloader loads classes if it's used anywhere for creating objects or references
+
+
+// FrontEnd code
+public class MobileClient {
+	
+	public static void main(String[] args) {
+		Mobile m = new Mobile();
+//		MobileDao mobileDao = new MobileDaoMongoImpl(); // loose coupling ==> Strategy Pattern
+		MobileDao mobileDao = MobileDaoFactory.getMobileDao();
+		mobileDao.addMobile(m);
+	}
+
+}
+
+java MobileClient:
+* loads MobileClient.class
+* loads String.class
+* loads Mobile.class ==> Product.class
+* MobileDao.class
+* MobileDaoFactory.class
+* MobileDaoMongoImpl.class
+
+Account.class, AccountClient.class, MobileDaoDBImpl.class, Tv.class are not loaded into JVM
+
+
+Class.forName("name"); // loads class
+
+Class.forName("java.util.Date"); // loads Date.class into JVM
+
+Class.forName("com.adobe.prj.dao.impl.MobileDaoDbImpl"); // loads MobileDaoDbImpl
+
+===========
+
+Creating Objects:
+
+* if we know class name in advance
+new ClassName();
+new Date()
+
+* if classname is dynamic:
+
+String str = "com.adobe.prj.dao.impl.MobileDaoMongoImpl"; // read from config.properties
+
+Class.forName(str).newInstance();
+
+========
+ 
