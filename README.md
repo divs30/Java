@@ -934,3 +934,179 @@ class Rectangle <T extends Number> {
 	...
 }
 
+=================================
+
+
+Exception handling in Java.
+
+Exception ==> An abnormal condition that arises during program execution
+When an exception occurs an object is created which contains:
+1) What Went Wrong?
+2) Why?
+3) Where?
+
+===========
+
+Exceptions can be checcked type or unchecked type of exceptions
+
+java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Checked1 {
+
+	public static void main(String[] args) {
+		System.out.println("Main Starts!!!");
+			try {
+				compute();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		System.out.println("Main ends!!!");
+	}
+
+	private static void compute() throws FileNotFoundException, SQLException {
+			FileInputStream fs = new FileInputStream("a.txt");
+			Connection con = DriverManager.getConnection("");
+	}
+
+}
+
+======
+
+
+public class Checked1 {
+
+	public static void main(String[] args) {
+		System.out.println("Main Starts!!!");
+			try {
+				compute();
+			} catch ( Exception e) {
+				e.printStackTrace();
+			}
+			
+		System.out.println("Main ends!!!");
+	}
+
+	private static void compute() throws  Exception {
+			FileInputStream fs = new FileInputStream("a.txt");
+			Connection con = DriverManager.getConnection("");
+	}
+
+}
+
+==================
+
+interface UserDao {
+	void register(User user);
+}
+
+class UserDaoMySQLImpl implements UserDao {
+	//
+	public void register(User user) {
+		try {
+
+			} catch(SQLException ex) {
+				// log exception
+			}
+	}
+}
+
+client:
+
+User u = new User(...);
+UserDao userDao = new UserDaoMySQLImpl();
+userDao.register(u);
+
+====
+
+
+interface UserDao {
+	void register(User user) throws SQLException;
+}
+
+
+
+class UserDaoMySQLImpl implements UserDao {
+	//
+	public void register(User user) throws SQLException {
+		 
+	}
+}
+
+
+class UserDaoMySQLImpl implements UserDao {
+	//
+	public void register(User user) throws MongoDBException {
+		 
+	}
+}
+
+
+
+Client:
+try {
+		User u = new User(...);
+		UserDao userDao = new UserDaoMySQLImpl();
+		userDao.register(u);
+	} catch(SQLException ex) {
+				// log exception
+	}
+
+======
+
+UserDefined Exception classes
+
+class PeristenceException extends Exception {
+	..
+}
+
+interface UserDao {
+	void register(User user) throws PeristenceException;
+}
+
+Client:
+try {
+		User u = new User(...);
+		UserDao userDao = new UserDaoMySQLImpl();
+		userDao.register(u);
+	} catch(PeristenceException ex) {
+				// log exception
+	}
+
+
+
+class UserDaoMySQLImpl implements UserDao {
+	//
+	public void register(User user) throws PersistenceException {
+		 try {
+		 		// code
+		 	} catch(SQLException ex) {
+				throw new PersistenceException(propermessage)
+		}
+	}
+}
+
+
+class UserDaoMySQLImpl implements UserDao {
+	//
+	public void register(User user) throws PersistenceException {
+		 try {
+		 		// code
+		 	} catch(MongoDBException ex) {
+				throw new PersistenceException(propermessage)
+		}
+	}
+}
+
+================
+
+Data Containers and Java 8 Stream ==> HOF
+Threads
+
+=========================
