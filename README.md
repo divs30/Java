@@ -566,6 +566,7 @@ public class Time {
 	private int hrs;
 	private int min;
 	...
+
 }
 
 
@@ -585,4 +586,58 @@ public class TimeExample {
 }
 
 ===============================
+
+BankingApplication ACME Bank ==> APIs from Citrus / Verisign
+
+===========================================
+
+Tv t = new Product(); // not valid
+
+if(p instanceof Tv)
+
+instanceof ==> checks if it is Assignable
+
+========
+If we know method name:
+ctx.method();
+
+p.getId(); ==> internally getId(p); where "p" will be passed as "this"
+
+===
+Reflection API:
+
+m.invoke(p); ==> if we have method pointer
+as good as  getId.invoke(p); ==> explicitly pass "p" to be refered as "this"
+
+=============
+
+ getter() returning an Product
+
+ Object retValue = m.invoke(someObject);
+
+ if retValue is an Product
+
+ System.out.println(retValue); ==> it internally invokes toString() method ==> Object
+
+ ===========
+
+ ORM, JPA, Spring, Jersey ==> expect entity classes to follow Java Bean naming convention getters/setters
+
+======================================
+
+I need to buy a Product? ==> Which 
+
+I need to open an Account? ==> What type of Account
+
+Product, Account ==> are too generic ==> doesn't exist in real world ==> used as generalization
+such classes are marked as "abstract" ==> prevent an Object from getting created
+
+
+==>
+
+abstract methods ==> forces all inherited concrete classes to implement the method
+
+* concrete classes ==> objects of the class can be created
+* if a class has abstract methods ==> class should be marked as abstract
+* abstract class need not have abstract methods
 

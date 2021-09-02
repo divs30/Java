@@ -1,6 +1,6 @@
 package com.adobe.prj.entity;
 
-public class Product {
+public abstract class Product {
 	private int id;
 	private String name;
 	private double price;
@@ -38,7 +38,20 @@ public class Product {
 		this.price = price;
 	}
 	
-	public boolean isExpensive() {
-		return false;
+	/**
+	 * method to find if product expensive or not.
+	 * 
+	 * @return true if product is expensive else return false
+	 */
+	public abstract boolean isExpensive();
+//	public boolean isExpensive() {
+//		return false;
+//	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
 	}
+	
+	
 }

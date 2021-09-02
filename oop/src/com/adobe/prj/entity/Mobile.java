@@ -1,5 +1,12 @@
 package com.adobe.prj.entity;
 
+/**
+ * This is an business entity to represent mobile data
+ * 
+ * @author banuprakash
+ * @version 1.0.0
+ * 
+ */
 public class Mobile extends Product {
 	private String connectivity;
 
@@ -18,7 +25,8 @@ public class Mobile extends Product {
 	public void setConnectivity(String connectivity) {
 		this.connectivity = connectivity;
 	}
-
+	
+	
 	@Override
 	public boolean isExpensive() {
 		if("3G".equals(connectivity) && getPrice() > 5000) {
