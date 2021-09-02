@@ -781,3 +781,156 @@ Class.forName(str).newInstance();
 
 ========
  
+interface Comparable {
+	int compareTo(Object o);
+} 
+
+o1.compareTo(o2);
+
+
+class Rectangle implements Comparable {
+	///
+	public int compareTo(Object o) {
+		// area diff
+	}
+}
+
+class Product implements Comparable {
+	//
+	public int compareTo(Object o) {
+		// price diff
+	}
+}
+
+class String implemements Comparable {
+	public int compareTo(Object o) {
+		// ASCII diff
+	}
+}
+
+
+==========
+
+
+public static void sort(Comparable[] elems) {
+	for i = 0; i < elems.length;
+		for j = i + 1; ...
+			if(elems[i].compareTo(elems[j]) > 0)
+				swap
+}
+
+=======
+
+Utility.java
+Product.java
+ProductClient.java
+
+========================
+
+
+interface Swim {
+	void swim();
+}
+
+interface Fight {
+	void fight();
+}
+
+interface Dance {
+	void dance()	;
+}
+
+// actor is capable to dance
+class Actor implements Dance {
+	..
+	public void dance() {
+		...
+	}
+}
+// hero is a actor; hero also knows to dance
+// hero can also fight and swim
+class Hero extends Actor implements Fight, Swim{
+	public void fight() {//}
+	public void swim() {//}
+}
+
+=====================================================
+
+interface Flyable {
+	void fly();
+}
+
+class Bird implements Flyable {
+	//state and behaviour
+	public void fly() {
+
+	}
+}
+
+class AeroPlane implements Flyable {
+	//state and behaviour
+	public void fly() {
+
+	}
+}
+
+Flyable f = new Flyable(); // is this valid? ==> can't instantiate interface like abstract class
+
+// Anonymous class
+Flyable f = new Flyable() {
+	public void fly() {
+		"jump from 10th floor!!!"
+	}
+}
+
+=====================================
+
+
+Java 8 ==> introduced lambda expression for functional interface [ interface with only one method 
+to implement]
+
+
+======================================
+
+Generics in Java <>
+
+class Rectangle <T> {
+	private T width;
+	private T breadth;
+	...
+}
+
+Rectangle<Integer> r1 = new Rectangle<Integer>(4,5);
+
+
+Rectangle<Double> r2 = new Rectangle<Double>(1.4,4.5);
+
+
+Rectangle<String> r3 = new Rectangle<String>("4cm","5inch");
+
+
+=======
+
+Integer is a type-wrapper class for int
+
+Double is a type-wrapper class from double
+
+
+class LinkedList<T> {
+	Node<T> node;
+}
+
+LinkedList<Product> list = ..
+
+LinkedList<String> list = ..
+
+================================
+
+
+
+class Rectangle <T extends Number> {
+	private T width;
+	private T breadth;
+	...
+}
+
