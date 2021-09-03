@@ -1110,3 +1110,112 @@ Data Containers and Java 8 Stream ==> HOF
 Threads
 
 =========================
+
+Day 3
+
+OCP ==> Reflection API ==> Methods, Class.forName() newInstance() instead of "new"
+Realization Relationship ==> interface ==> Anonymous class ==> Lambda expression for FuntionalInterface [ interface with only one method to implement]
+
+Strategy Pattern , Factory Pattern, Generic Class <T>
+
+=================
+
+Exception Handling
+Exception: What, Why, Where
+DefaultExceptionHandler for every Thread ==> If an exception is not caught in a method it pushs up the call stack ==> If no method in the stack hanldes it; exception object is given to DefaultHandler
+==> If exception is handed over to Default Handler ==> Thread dies
+
+UnChecked type of exceptions should be handled using conditional statements and not with try-catch
+
+if(product != null) {
+	productDao.addProduct(product);
+}
+
+if( y != 0) {
+	result = x / y;
+}
+
+They occur because of reasons  within JRE;
+
+---------
+
+Checked type of exceptions
+ are actualy triggered outside of JRE as in ==> Database, File, OS, ...
+ SQLException, IOException 
+ try {
+
+ } catch(SQLException ex) {
+
+ }
+
+==> throws SQLException
+
+ =========================
+
+
+Java Collection Framework ==> Data Containers
+
+Array is a data container
+Product[] products = new Product[100];
+
+int[] elems = new int[50];
+int elems[] = new int[5];
+
+* size is fixed; can't grow or shrink
+* adding or removing from arbitrary position is difficult
+
+Java Collection Framework provides many data containers
+* interfaces
+* implementation classes
+* Algorithm classes [ sort, max, binarySearch, ..]
+
+==> You can also use 3rd party implementation classes for the interfaces provided by JCF
+* Apache Commons Collection
+* VAVR [ https://www.vavr.io/ ]
+
+======
+
+Comparable
+
+1) natural comparision
+String by ascii/unicode
+Product by id
+employee by id
+
+2) Logic is part of object
+String and Product has compareTo() method
+
+public interface Comparable<T> {
+	    public int compareTo(T o);
+}
+
+String s1 = ..
+String s2 = ..
+
+s1.compareTo(s2);
+
+Comparator
+
+1) Other than natural comparision based
+on client requirement
+String by length
+[Lee, Brad, Harry, Angelina]
+Product by name/price
+
+2) Logic will be in client who is sorting/max/..
+
+public interface Comparator<T> {
+	  int compare(T o1, T o2);
+}
+
+String s1 = ..
+String s2 = ..
+
+comp.compare(s1 , s2);
+
+=========================
+
+
+Resume @ 11:00
+
+========================
