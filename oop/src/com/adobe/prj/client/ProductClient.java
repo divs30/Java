@@ -1,6 +1,9 @@
 package com.adobe.prj.client;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.adobe.prj.entity.Mobile;
 import com.adobe.prj.entity.Product;
@@ -24,11 +27,20 @@ public class ProductClient {
 //		printExpensive(products);
 //		printDetails(products);
 		
-//		printOCPway(products);
+		List<HashMap<String, String>> data = printOCPway(products);
+		
+		for(HashMap<String, String> map : data) {
+			map.forEach( (k, v) -> {
+				System.out.println(k + " : " + v);	
+			});
+			System.out.println("********");
+		}
 	}	
 	// OCP
-	private static void printOCPway(Product[] products) {
+	private static List<HashMap<String, String>>  printOCPway(Product[] products) {
+		List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
 		for(Product p : products) {
+			HashMap<String, String> map = new HashMap<String, String>();
 			Method[] methods = p.getClass().getMethods();
 			for(Method m : methods) {
 				if(m.getName().startsWith("get")) {
@@ -36,11 +48,12 @@ public class ProductClient {
 					try {
 						retValue = m.invoke(p);
 					} catch(Exception ex) { ex.printStackTrace();}
-					System.out.println(m.getName().substring(3).toUpperCase() + " : " + retValue);
+					map.put(m.getName().substring(3).toUpperCase() , retValue.toString());
 				}
 			}
-			System.out.println("*********");
+			list.add(map);
 		}
+		return list;
 	}
 
 	// Not OCP

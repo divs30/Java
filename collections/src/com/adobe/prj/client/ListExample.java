@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.adobe.prj.entity.Product;
@@ -64,6 +65,17 @@ public class ListExample {
 					.reduce(0.0, (v1, v2) -> v1 + v2);
 		
 		System.out.println(total);
+		
+		System.out.println("***********");
+		
+		Map<String, List<Product>> productCat = 
+				products.stream().collect(Collectors.groupingBy(p -> p.getCategory()));
+		
+		productCat.forEach( (k,v) -> {
+			System.out.println("Category :" + k);
+			v.forEach(System.out::println);
+		});
+		
 		
 	}
 

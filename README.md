@@ -1373,6 +1373,127 @@ intermediary operaitons ==> map, flatMap, filter, skip, limit
 terminal operations ==> forEach, collect, reduce
 
 
+=====================================
+
+Weekend: Self-study
+1) flatMap
+2) Set, HashSet and TreeSet
+
+===============================
+
+Map ==> Storage in the form of Key/ Value pair
+Key ==> Unique
+value ==> can be duplicate
+
+Example: Dictionary, Registry, ..
+
+CONNECTIVITY : 4G
+NAME : MotoG
+ID : 453
+PRICE : 12999.0
+
+=============================
+
+HashMap implements Map
+
+class Rectangle {
+	w, b
+
+	public int hashCode() {
+		return w * b;
+	}
+}
+
+4 x 5 ==> 20
+5 x 4 ==> 20
+10 x 2 ==> 20
+20 x 1 ==> 20
+...
+
+====================================
+
+Java Concurrent Programming ==> Writing multi-threaded applications
+
+Process ==> Program in execution ==> should have atleast one unit work
+
+Thread ==> unit of work
+
+notepad, calculator, file explorer ==> single threaded application
+
+Word, Eclipse, Web Browser ==> multi threaded application
+
+* In Word 
+	==> document editing is one thread
+	==> Spell check is one thread
+	==> Grammer check
+	==> Auto Saving
+
+* In Eclipse
+	=> Program editing
+	=> Syntax check
+	=> auto complete
+	=> Incremental compile
+
+=============
+
+Why do we need Multi-threaded application?
+1) Better User experience
+2) Avoid starvation
+3) Optimization of resource usage
+	1 Thread ==> 1 posix thread ==> 1 core / CPU
+	1 document can be used by "spell check", "grammer check", "editing"
+4) If one functionality fails as in GrammerCheck ==> only GrammerCheck thread destroyed, applicaiton
+can still run with "Editing", "Spell check", "auto-save"
+
+====================================
+Java Provides:
+
+1)
+
+interface Runnable {
+	void run();
+}
+
+Main thread ==> entry point is main() method
+for every other thread entry point is run() method
+
+class SpellCheckThread implements Runnable {
+
+	public void run() {
+		doCheckSpell();
+	}
+
+	void doCheckSpell(){
+
+	}
+}
+
+===========
+2) Thread class
+
+has thread control methods
+* start()
+* sleep(long ms)
+* yield()
+* join()
+* interrupt()
+
+Depecreated methods:
+* suspend()
+* resume()
+* stop()
+
+===============
+
+
+
+
+
+
+
+
+
+
 
 
 
