@@ -23,7 +23,7 @@ public class Account {
 		this.balance = balance;
 	}
 
-	public  void deposit(String name, double amt) {
+	public synchronized  void deposit(String name, double amt) {
 		System.out.println(name + " trying to deposit !!!");
 		System.out.println(name + " getting the balance ");
 		double bal = getBalance();
@@ -33,7 +33,7 @@ public class Account {
 		setBalance(bal);
 	}
 
-	public  void withdraw(String name, double amt) {
+	public synchronized  void withdraw(String name, double amt) {
 		System.out.println(name + " trying to withdraw !!!");
 		System.out.println(name + " getting the balance ");
 		double bal = getBalance();

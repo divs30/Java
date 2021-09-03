@@ -1485,6 +1485,35 @@ Depecreated methods:
 
 ===============
 
+Thread Safety
+
+* member is thread safe if it doesn't get corrupted in multi-threaded environment
+
+* Local variables ==> Stack ==> each thread has a seperate stack ==> SAFE
+
+* Instance variables ==> HEAP ==> threads share heap area ==> Not Safe
+	Word Document is on Heap ==> spell, grammer and edit are happening
+
+* Static variables ==> class data ==> loaded classes are shared ==> Not Safe
+
+================================================
+
+Maven, Database and web application development
+
+=========================
+
+How HashSet works?
+
+flatMap()
+
+RDBMS ==> SQL skills
+
+CRUD operations on RDBMS
+
+https://www.sqltutorial.org/
+
+==============
+
 
 
 
