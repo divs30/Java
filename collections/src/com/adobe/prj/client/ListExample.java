@@ -55,6 +55,16 @@ public class ListExample {
 		names.forEach(System.out::println); // not using stream
 		
 		System.out.println("************");
+		
+		// total cost of computers
+		
+		double total = products.stream()
+					.filter(p -> p.getCategory().equals("computer"))
+					.map(p -> p.getPrice())
+					.reduce(0.0, (v1, v2) -> v1 + v2);
+		
+		System.out.println(total);
+		
 	}
 
 }

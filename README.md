@@ -1362,6 +1362,16 @@ Object o = new Product();
 
 Object o = new Integer(); // 
 
+=========
+List<String> nameData 
+I need names of only computer products
+
+============
+
+intermediary operaitons ==> map, flatMap, filter, skip, limit
+
+terminal operations ==> forEach, collect, reduce
+
 
 
 
