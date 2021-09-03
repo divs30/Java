@@ -38,7 +38,7 @@ public class ArrayExample {
 		
 //		Arrays.sort(products, (p1,p2) -> (int) (p1.getPrice() - p2.getPrice()));
 		
-		Arrays.sort(products, (p1,p2) -> p1.getName().compareTo(p2.getName()));
+		Arrays.sort(products, (p1,p2) -> p1.getName().toLowerCase().compareTo(p2.getName().toLowerCase()));
 		
 		
 		for(Product p : products) {

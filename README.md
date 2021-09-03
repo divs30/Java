@@ -1215,7 +1215,155 @@ comp.compare(s1 , s2);
 
 =========================
 
+ public class Example {
 
-Resume @ 11:00
+ public static void main(String[] args) {
+	Runnable r = new Runnable() {
+	  public void run() {
+	 	System.out.println("Hello");	
+         	}
+	};
+} 
 
-========================
+private static void doTask(Runnable r) {
+  r.run();
+}
+}
+
+Vs
+
+---
+
+public class Example {
+
+ public static void main(String[] args) {
+	Runnable r = () -> System.out.println("Hello");	
+ }
+} 
+
+private static void doTask(Runnable r) {
+  r.run();
+}
+}
+
+============================
+
+* List is an interface of JCF
+=> ordered collection
+=> supports duplicate elements
+=> index based operations are supported
+	add(5, "a");
+	remove(2);
+	get(10);
+=> can be re-orderd ==> sort()/ shuffle() / reverse()
+
+===
+
+ArrayList / LinkedList are implmentations of List interface	
+
+=======
+1)
+Program to interface:
+
+List list = new ArrayList();
+or
+List list = new LinkedList();
+or 
+List list = new Apache provided implmentation OR VAVR 
+
+list.add("A");
+list.add(4);
+list.add(new Date()); 
+
+Above code is not type-safe
+
+String s1 = list.get(0); // no problem
+
+s1 = list.get(1); // ClassCastException
+
+We may need "instanceof" or getClass() to do type-checking
+
+2)
+
+List<String> list = new ArrayList<String>(); // type-safe collection with generics
+
+list.add("A"); // valid
+list.add(4);	 // fails
+
+for(String s : list) {
+	no need to typecheck
+}
+
+===========================
+
+Functional Style of Programming with HOF
+
+* OOP
+methods are tightly coupled to state of object [ deposit() can be used only on Account]
+
+* FunctionalStyle of Programing
+functions ==> not tightly coupled to state of object [ can be used on any type]
+
+
+High Order Function
+* functions which can accept other functions as arguments
+* functions return a function
+* pass and return functions similar to primitive or object
+
+==> Lambda expression and FunctionalInterface
+
+Some of the built-in FunctionalInterfaces
+* Predicate
+* Supplier
+* Consumer
+* Runnable
+* Comparator
+* Function
+* BiFunction
+
+Commonly used HOF:
+https://rxmarbles.com/
+
+* filter ==> get subset based on predicate
+	==> get even numbers 
+	==> get only mobile products
+* map
+	==> to transform the data based on Transform function [Function]
+
+* forEach
+* reduce
+* flatMap
+* limit
+* skip
+* collect
+
+==========
+Java 8 streams supports using HOF
+
+data flowing from network/ filesystem/ or Reactive Databases like MongoDB / Postgres RJDBC/ JCF
+
+=========
+
+Generic Collections are not covariant
+
+List<Integer> ilist = ...
+
+List<Double> dList = ...
+
+List<Product> plist = ...
+
+
+List<Object> list = plist; // error
+
+
+==========
+
+Object o = new Product();
+
+Object o = new Integer(); // 
+
+
+
+
+
+
