@@ -1679,20 +1679,67 @@ END;
 
 	finally block ==> compulsory execute code [ exception occurs or not]
 
-	
+=========
+
+ ResultSet executeQuery(SQL) ==> SELECT statement
+
+  int executeUpdate(SQL) ==> INSERT, DELETE or UPDATE
+
+  0 ==> no records effected  
+  n => number of records effected
+  -1 ==> SQL fails
+
+  SQLException ==> Backend isssues
+
+  ================
+
+  new DaoException("unable to add product...");
+
+  ex.getMessage();
+
+=============
+
+select * from products;
+
+===========
+
+docker ==> container 
+
+Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.
+
+MySQL terminal:
+
+docker exec -it local-mysql bash
 
 
+# mysql -u "root" -p
+Enter Password: Welcome123
+
+mysql> create database JAVA_3;
+
+mysql> use JAVA_3;
+
+mysql> create table products( id int PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), price double, quantity int);
+
+mysql> insert into products values (0, 'iPhone 12', 98000.00, 100);
+mysql> insert into products values (0, 'Logitech Mouse', 800.00, 100);
+mysql> select * from products;
+
+======
+use PreparedStatement
+
+Product getProduct(int id) throws DaoException;
+SQL = "select id, name, price, quantity from products where id = ?";
+
+void updateProduct(Product p) throws DaoException;
+SQL = "update products set price = ?, quantity = ? where id = ?"
+
+=================================================================
 
 
+Post Lunch ==> Web application
 
-
-
-
-
-
-
-
-
+=================================
 
 
 
