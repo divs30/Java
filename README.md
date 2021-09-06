@@ -1722,6 +1722,8 @@ mysql> use JAVA_3;
 mysql> create table products( id int PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), price double, quantity int);
 
 mysql> insert into products values (0, 'iPhone 12', 98000.00, 100);
+insert into products( name, price) values ('iPhone 12', 98000.00);
+
 mysql> insert into products values (0, 'Logitech Mouse', 800.00, 100);
 mysql> select * from products;
 
@@ -1736,11 +1738,174 @@ SQL = "update products set price = ?, quantity = ? where id = ?"
 
 =================================================================
 
+Web application Development
 
-Post Lunch ==> Web application
+---------------------------
 
-=================================
 
+
+A web container is responsible for managing the lifecycle of servlets, mapping a URL to a particular servlet and ensuring that the URL requester has the correct access-rights
+
+
+Servlet ==> Server side Java code running within Servelt container / web container
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+
+}
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+
+}
+
+
+request --> object encapsulates all the information coming from client
+response ==> object is used to write data back to client
+
+============
+
+Servlet Container / Web Container / Servlet engines ==> Tomcat, Jetty
+
+Eclipse Jetty is a Java web server and Java Servlet container.
+
+==============================
+
+HTTP Request ==> using URL we map URL to Servlet
+
+HTTP Method of Request: GET, POST, PUT, DELETE, PATCH, 
+
+GET: 
+==> Address bar and Hyperlink
+==> No Payload
+
+POST: Form data submit
+Payload will be sent to server
+==> to create a resource on server // insert a row in database
+
+PUT: to modify a record
+contains payload
+
+DELETE : delete a record on server
+No Payload
+
+=========================================
+
+
+
+
+
+@WebServlet("/product")
+public class LoginServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+		// logic
+	}
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
+		// logic
+	}
+}
+
+
+=================
+
+Servlet Container / Engine can create objects if class is of type "HttpServlet"
+
+HttpServlet extends GenericServlet implements Servlet interface
+
+Servlet interface has all the method declarations [ get, post, options, service,.. ]
+
+HttpServlet
+
+	public void service(HttpServletRequest req, HttpServletResponse res) {
+		String method = req.getMethod();
+		switch(method) {
+			case GET:
+				public void doGet(req,res); break;
+			case POST:
+				public void doPost(req,res); break;
+
+	}
+====================================
+Web applications are deployed on conatiner in the form of "war" not "jar"
+war ==> Web Archive
+
+<packaging>war</packaging>
+
+database.war
+
+===========
+
+
+<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+</dependency>
+
+HttpServlet, HttpServletRequest, HttpServletResponse, .... are not a part of java apis
+
+
+
+<scope>provided</scope> 
+
+I use this to develop; don't include this in "war" bundle; target server has this
+
+==========
+
+<scope>test</scope> ==> i am using this only for testing ; not a part of production
+
+===========
+
+<plugin>
+		<groupId>org.eclipse.jetty</groupId>
+		<artifactId>jetty-maven-plugin</artifactId>
+		<version>9.3.7.v20160115</version>
+</plugin>
+
+This is going to include "jetty" as servlet container; Need not install seperatly in machine
+
+=========
+
+<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+</plugin>
+
+tHIS PLUGIN creates "war" file
+
+<failOnMissingWebXml>false</failOnMissingWebXml> ==> not using "web.xml"
+
+"web.xml" is deployment descriptor for web application
+
+web.xml before: 2.5 version of Servlet API
+
+<servlet>
+	<servlet-name>A</servlet-name>
+	<servlet-class>com.adobe.prj.web.LoginServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>A</servlet-name>
+	<url-pattern>/login</url-pattern>
+</servlet-mapping>
+
+Now we use : @WebServlet("/login")
+
+=======
+
+Run As => MAven Build
+
+Goals ==> jetty:run  ==> Click on "Run" Button
+
+=====================
+
+jetty:run -Djetty.port=9999
 
 
 
