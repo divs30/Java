@@ -1512,7 +1512,177 @@ CRUD operations on RDBMS
 
 https://www.sqltutorial.org/
 
+
 ==============
+
+join() ==> caller thread [ main ] waits for other thread [ t1, t2, t3] to finish execution
+
+======================
+
+wait() and notify() along with semaphore
+
+=====================================
+Java Concurrency in Practice
+
+==================================
+
+Day 4
+
+-----
+
+Maven ==> Java Build tool
+* Manages dependencies [ Project may need many 3rd party dependencies ==> libraries ==> "jar" files]
+==> Issues: each member might download different versions; manage transitive dependencies
+
+Maven manges dependecies ==> download, publish from/to repositories [ similar to PIP of Python, Webpack/grunt of NodeJS]
+
+* pom.xml ==> Project Object Model ==> dependencies are configured. pom.xml is shared to all team members; 
+
+----
+* Maven to compile/ test / build / publish /run of server ...
+
+===============================
+	below 3 combination should be unique:
+ 	GroupId: organization+module ==> com.uber.eat
+ 	artificatId: moduleName ==> customerModule
+ 	version: 1.0.0
+==================================
+Maven Goals: clean, compile, build, publish, install, ..
+
+Maven --> Plugins ==> Configure JRE version / Server / Profile
+
+Compile:
+mvn compile
+
+=============
+
+
+JDBC ==> Java Database Connectivity ==> Integration APIS [ connecting to different technologies]
+
+JDBC ==> to connect to RDBMS
+
+JDBC contains interfaces only.
+Implementation classes are provided by database vendors [ Oracle / MySQL/ Postgres, ... provides "jar" implmentating these interfaces]
+
+int x  = 10; ==> JAVA CODe
+
+Database ==> Oracle == NUMBER(12)
+MySQL == INT
+
+NUMERIC(12)
+
+String s = "Hello";
+
+Oracle VARCHAR2(100)
+MySQL VARCHAR(100)
+SQL Server ==> TEXT
+
+data dd-mmm-yyy in oracle and "yyyy-mm-dd" in MySQL
+
+==================================
+
+JDBC Steps:
+
+1) Load driver classes provided by database vendor [ MySQL / Oracle/ Postgrees]
+
+Class.forName("com.mysql.cj.jdbc.Driver"); 
+
+Class.forName("oracle.jdbc.Driver"); 
+
+2) Establish a database Connection:
+	// use factory method
+	java.sql.Connection is an interface
+
+	java.sql.Connection con = DriverManager.getConnection(url, username, password);
+
+
+	getConnection() returns MySQLConnection / ORacleConnection / .. based on URL
+
+
+	URL ==> "jdbc:mysql://192.168.45.11:3306/adobe_db"
+
+	getConnection() creates MySQLConnection object
+
+	URL ==> "jdbc:oracle:thin:@198.21.141.5:1521/adobe_db"
+
+	getConnection() creates OracleConnection object	
+
+
+3) Send SQL statements to database
+	3.1) Statement
+		IF SQL is fixed / doesn't get changed for different users
+		"select * from employees"
+
+	3.2) PreparedStatement
+		IF SQL takes IN parameter [ ? ]
+
+		"select * from accounts where userid = ? and password = ?"
+
+		Avoid using:
+		"select * from accounts where userid = '" + u + "' and  password = '" + pwd + "'"		
+		https://owasp.org/www-project-top-ten/
+
+		String query = "SELECT * FROM accounts WHERE custID='" + request.getParameter("id") + "'";
+
+		http://example.com/app/accountView?id=' or '1'='1
+
+	3.3) CallableStatement
+		to invoke Stored Procedure
+	Java: call UpdateCourse("Java")
+
+	CREATE OR REPLACE Procedure UpdateCourse ( name_in IN varchar2 )
+	IS
+  		 cnumber number;
+	   cursor c1 is
+   SELECT course_number
+    FROM courses_tbl
+    WHERE course_name = name_in;
+
+BEGIN
+
+   open c1;
+   fetch c1 into cnumber;
+
+   if c1%notfound then
+      cnumber := 9999;
+   end if;
+
+   INSERT INTO student_courses
+   ( course_name,
+     course_number )
+   VALUES
+   ( name_in,
+     cnumber );
+
+   commit;
+
+   close c1;
+
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+==============
+
+4) ResultSet ==> Cursor to fetched records from database tables
+
+5) Close the connection and other resources in "finally" block
+
+	try {
+
+		} catch(SQLException ex) {
+
+		} finally {
+			con.close();
+		}
+
+	finally block ==> compulsory execute code [ exception occurs or not]
+
+	
+
+
+
 
 
 
