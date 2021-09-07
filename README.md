@@ -2157,9 +2157,90 @@ Run As => Run Configurations ==> Arguments ==> Program arguments:
 OR
 --spring.profiles.active=dev
 
+=========================================
+
+@Primary, @Qualifier or @Profile
+
+========================================
+
+ORM ==> Object Relational Mapping
+
+Java class < --- > database table
+fields <-----> table columns
+
+ORM frameworks like => Hibernate, KODO, OpenJPA, TopLink, ... perform CRUD operations
+
+JPA ==> Java Persistence API ==> is a specification for ORMs [ interfaces for ORM]
+
+============================================
+
+EntityManagerFactory emf = new EntityMAangerFactroy();
+emf.setDataSource( new HikariCP(...));
+emf.setJPAVendor(new HibernateJPAVendor());
+emf.setPackagesToScan("com.adobe.prj.entity");
+
+DAO classes:
+
+@Repository
+class ProductDaoJpaImpl implements ProductDao {
+	@PersistenceContext 
+	EntityManager em;
+
+	public void addProduct(Product p) {
+		em.save(p);
+	}
+}
+
+===========================================
+
+With Spring Data JPA
+
+interface ProductDao extends JPARepository<Product, Integer> {
+}
+
+interface CustomerDao extends JPARepository<Customer, String> {
+}
+
+Spring generates Repositry classes for this interface; no need to write any DAO classes on your own
+@Repository not required
+
+========================
+
+spring.datasource.url=jdbc:mysql://localhost:3306/JAVA_3?createDatabaseIfNotExist=true
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+spring.datasource.username=root
+spring.datasource.password=Welcome123
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+#server.port=9999
 
 
 
+
+
+spring.jpa.hibernate.ddl-auto=update
+
+DDL ==> Data Definition Language ==> CREATE TABLE, ALTER, DROP
+* update
+create table if not exists, use if it already exists, alter table if required
+
+* verify
+use existing table only; don;t create or alter
+
+* create
+every run of application==> drop table and re-create ==> useful in testing scenarios only
+
+===
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+Generate SQL to match MySQL8
+
+=======
 
 
 
