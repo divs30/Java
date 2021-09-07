@@ -26,9 +26,9 @@ public class OrderappApplication implements CommandLineRunner {
 		// can access all spring beans here
 		// helps @Autowired in client code instead of using ApplicationContext ctx;
 		// ctx.getBean(....)
-//		addProduct();
-//	printProducts();
-		update();
+		//		addProduct();
+		//	printProducts();
+		//		update();
 		
 	}
 

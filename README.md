@@ -2242,6 +2242,135 @@ Generate SQL to match MySQL8
 
 =======
 
+Custom Queries in DAO interface:
+
+public interface ProductDao extends JpaRepository<Product, Integer> {
+	
+	@Query("from Product where price >= :low and price <= :high")
+	List<Product> getProductsByRange(@Param("low") double lower, @Param("high") double higher);
+	
+	@Modifying
+	@Query("update Product set price = :pr where id = :id")
+	void updateProductPrice(@Param("pr") double price, @Param("id") int id);
+}
+
+========================
+ProductDao.java
+OrderService.java
+OrderappApplicaiton.java
+
+================================
+
+@ConditionalProperty(dao="mysql")
+public interface ProductDao extends JpaRepository<Product, Integer> {
+}
+
+@ConditionalBean("productDao")
+
+===========================
+
+Task:
+1) complete adding and fetching customers;
+
+=============
+
+RESTFUL web application development using Spring framework
+
+Representational State Transfer
+
+Resources reside on server [ database / files / printer]
+Representation ==> state of Resources are served to clients in various formats [ XML / JSON / CSV / ..]
+
+REST uses HTTP protocol
+* uses URL to identify a resource
+* uses HTTP methods to perform operations
+
+Example:
+1)
+accept:application/json ==> required for GET request
+
+GET
+http://amazon.com/api/products
+
+==> fetch all products
+
+2) 
+
+Use Query parameter [ ? ] to implement filter
+
+GET
+http://amazon.com/api/products?category=mobile
+
+==> fetch only mobile products
+
+
+GET
+http://amazon.com/api/products?page=2&size=20
+
+pagination
+
+3) 
+PathParam [ / ]
+
+GET
+http://amazon.com/api/products/4
+get a product whose id is "4"
+
+
+--
+
+4) POST
+http://amazon.com/api/products 
+
+Payload contains product data in the form of "json/xml" to be added to "products" resource
+content-type:application/json
+
+---------
+
+5) 
+Avoid this
+
+DELETE
+http://amazon.com/api/products/3
+
+delete a product whose id is "3" 
+
+---
+
+6)
+
+PUT
+http://amazon.com/api/products/2
+
+Payload contains product data of product whose id is "2" in the form of "json/xml" to be updated  in "products" resource
+content-type:application/json
+
+---------
+
+POST and PUT has payload ==> not IDEMPOTENT
+GET and DELETE has no payload ==> also they are IDEMPOTENT
+
+============
+
+spring-boot-starter-web ==> adds "tomcat" plugin / "servlet api" / "jackson api for JSON handling"
+
+Java < -- >  JSON
+* Jackson
+* Jettison
+* GSON
+* Moxy
+
+Spring Boot is higly opiniated:
+* configures "Hibenate as ORM"
+* configures "tomcat" as Web server
+* HikariCP for "Connection pool"
+
+=======================
+GET
+http://localhost:8080/api/products
+
+@ResponseBody ==> converts Java into representation based on "accept:application/json" header
+
 
 
 
