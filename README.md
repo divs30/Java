@@ -1908,4 +1908,119 @@ Goals ==> jetty:run  ==> Click on "Run" Button
 jetty:run -Djetty.port=9999
 
 
+Resume @ 4:30
+JSTL:
+<c:forEach items="${products}" var="product">
+	${product.name}
+</c:forEach>
+
+=============
+
+MVC Archtectural pattern
+
+@WebServlet("*.do")
+public class FrontControllerServlet extends HttpServlet {
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+		doPost(req, res);
+	}
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
+		String uri = req.getRequestURI(); // http://localhost:8080/addProduct.do
+		if(uri.endsWith("addProduct.do")) {
+
+			} else if if(uri.endsWith("getProduct.do")) {
+
+
+			} else if if(uri.endsWith("login.do")) {
+
+
+			}
+	}
+
+}
+
+=======================================
+
+
+ServletContext ==> one per web application; shared by all users and objects within application
+
+If information needs to be shared between users -=> use ServletContext
+
+* Chat Application
+* Bid Application
+
+===========================
+
+Help ==> Eclipse Market Place ==> Spring Tools
+
+=============
+
+Servlet ==> java code running on Web Container / Servlet Container / Servlet engine
+
+* extends HttpServlet
+
+* doGet(HttpServletRequest req, HttpServletResponse res);
+* doPost(HttpServletRequest req, HttpServletResponse res);
+
+request and response objects are created by the "engine" and injected to "doGet/doPost/.." based on
+request method [ GET/ POST/ PUT / DELETE]
+
+----------------------------------
+
+MVC Architectural Pattern 
+
+C ==> controller ==> prefer using Servlet as Controller
+V ==> Views ==> Prefer HTML / JSP as views
+HTML ==> pure static content
+JSP ==> static + dynamic
+M ==> Model ==> Business data / business logic / DAO / service
+
+============================================
+
+Redirection
+* Client Side redirection
+	==> reset the data which was sent previously
+	==> Generally we use this to redirect to different servers
+	==> Prefer this to redirect after doing some INSERTION / UPDATE on Server
+
+	response.sendRedirect("index.jsp?msg=Product added successfully!!");
+
+* Server Side redirection
+	==> Multi stage processing of data
+	==> can carry information from first resource to second resource by setting it into "request" object
+	request.getRequestDispatcher("secondresource").forward(req, res);
+
+============================================================================
+
+
+Session Tracking:
+
+-----------------
+
+HTTP Protocol is stateless protocol; every request from client creates new "request" and "response" objects ==> Previously sent data is lost ==>  "request" and "response" objects are destroyed
+as soon as response is commited.
+
+Session Tracking ==> abilty given to server code to track conversational state of client
+==> login ==> we have client info
+==> add mobile
+==> add tv
+==> buy books
+==> checkout [ need details of what was purchared from different pages like [mobile, tv, books]]
+
+=> clear the data on logout / checkout
+
+==================
+
+
+
+
+
+
+
+
+
+
+
+
 

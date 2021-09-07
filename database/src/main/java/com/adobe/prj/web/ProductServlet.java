@@ -44,6 +44,19 @@ public class ProductServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter("name");
+		double price = Double.parseDouble(request.getParameter("price"));
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		
+		ProductDao productDao = new ProductDaoJdbcImpl();
+		try {
+			 Product p = new Product(0, name, price, quantity);
+			 productDao.addProduct(p);
+			 response.sendRedirect("index.jsp?msg=Product added successfully");
+		} catch (DaoException e) {
+			e.printStackTrace();
+			 response.sendRedirect("index.jsp?msg=" + e.getMessage());
+		}
 	}
 
 }
