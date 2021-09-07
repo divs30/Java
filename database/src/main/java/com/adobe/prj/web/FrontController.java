@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,7 @@ public class FrontController extends HttpServlet {
 			HttpSession ses = request.getSession(); // create a session if not exist else get existing session
 			ses.setAttribute("user", request.getParameter("email"));
 			String uriLoc = "index.jsp";
+			
 			response.sendRedirect(uriLoc);
 		} else if (uri.endsWith("logout.do")) {
 			// get session if exist

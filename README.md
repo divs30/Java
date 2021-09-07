@@ -2012,8 +2012,150 @@ Session Tracking ==> abilty given to server code to track conversational state o
 
 ==================
 
+Servlet API provides HttpSession API for session tracking
+
+==============================================================
+Traditional web application development:
+index.jsp
+login.jsp
+FrontController.java
+productForm.html
+print.jsp
 
 
+RESTful and GraphQL ==> serve JSON ==> JSON is consumed by Angular/ REACt / Backbone / Vue
+
+=========================
+Spring and JPA
+
+=====================
+
+Spring Framework
+provides lightweight container with Dependency Injection feature for building enterprise application
+
+* Dependency Injection ==> Inversion Of Control
+* EAI ==> Simplifies integrating with other technologies [ Database , mail, Message service]
+
+Google ==> Guice, Play Framework
+
+===============================
+
+Spring uses metadata [ xml / annoation] for managing lifecyle of bean [ any object maanged by spring]
+and wiring between objects
+
+public interface EmployeeDao {
+	void addEmployee(Employee e);
+}
+
+public class EmployeeDaoJdbcImpl implements EmployeeDao {
+	public void addEmployee(Employee e) { .. }
+}
+
+public class EmployeeDaoMongodbImpl implements EmployeeDao {
+	public void addEmployee(Employee e) { .. }
+}
+
+
+public class SampleService {
+	private EmployeeDao empDao;
+
+	public void setEmployeeDao(EmployeeDao ed) {
+		this.empDao = ed;
+	}
+
+	public void insert(Employee e) {
+		empDao.addEmployee(e);
+	}
+}
+
+beans.xml
+
+<bean id="empDao" class="com.adobe.prj.dao.EmployeeDaoJdbcImpl" />
+<bean id="mongo" class="com.adobe.prj.dao.EmployeeDaoMongodbImpl" />
+<bean id="sample" class="com.adobe.prj.service.SampleService" >
+	<property name="employeeDao" ref="mongo" />
+</bean>
+
+========================================
+
+Annotations:
+Spring container creates objects of classes which has one of these annotations at class level
+* @Component
+* @Service
+* @Repository
+* @Controller
+* @RestController
+* @Configuration
+
+Spring does wiring using:
+* @Autowired
+
+Example:
+
+public interface EmployeeDao {
+	void addEmployee(Employee e);
+}
+
+@Repository
+public class EmployeeDaoJdbcImpl implements EmployeeDao {
+	public void addEmployee(Employee e) { .. }
+}
+
+id will be "employeeDaoJdbcImpl"
+
+If we want different ID to be given: @Repository("empDao")
+
+@Service
+public class SampleService {
+	@Autowired
+	private EmployeeDao empDao;
+ 
+	public void insert(Employee e) {
+		empDao.addEmployee(e);
+	}
+}
+
+==========
+
+@SpringBootApplication
+has :
+* @ComponentScan ==> scans for all classes with above mentioned annoations like @Service, @Repository, from "com.example.demo" package and sub-packages and creates objects
+
+* @EnableAutoConfiguration ==> scans for "jar" files and creates objects
+
+* @Configuration ==> its also a configuration class
+
+===
+
+* SpringApplication.run(SpringdemoApplication.class, args); creates Spring Container
+
+====================================
+1)  When more than one bean qualifies to be @Autowired; because classes implment the same interface
+* prefer marking one of them with @Primary
+
+@Repository
+@Primary
+public class EmployeeDaoJdbcImpl implements EmployeeDao {
+
+=======================
+
+2) use Profile to resolve the ambiquity
+
+@Repository
+@Profile("prod")
+public class EmployeeDaoJdbcImpl implements EmployeeDao {
+
+---
+
+@Repository
+@Profile("dev")
+public class EmployeeDaoMongoImpl implements EmployeeDao {
+
+
+Run As => Run Configurations ==> Arguments ==> Program arguments:
+--spring.profiles.active=dev
+OR
+--spring.profiles.active=dev
 
 
 
