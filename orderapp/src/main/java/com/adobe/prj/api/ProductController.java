@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adobe.prj.entity.Product;
 import com.adobe.prj.service.OrderService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("api/products")
 public class ProductController {
@@ -29,6 +32,7 @@ public class ProductController {
 	// http://localhost:8080/api/products
 	// http://localhost:8080/api/products?low=1000&high=50000
 	// ? is queryparam ==> RequestParam
+ 
 	@GetMapping()
 	public @ResponseBody List<Product> getProducts(@RequestParam(name="low", defaultValue = "0.0" ) double low,
 			@RequestParam(name="high", defaultValue = "0.0" ) double high) {

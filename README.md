@@ -2679,8 +2679,54 @@ Exceptions has to be caught and proper message needs to be sent to client
 
 GlobalExceptionHandler ==> Entire application class to handle exceptions and send proper message to client
 
+====================
+
+Swagger ==> OpenAPI implementation of Documentation ==> RESTAPIs has to be documented
+
+http://localhost:8080/swagger-ui.html
+
+@Component, @Service, @Controller, ... uses only default constructor not parameterized constructor
+
+no annotations for this class:
+* this class can be provided by 3rd party
+* class has no default constructor
+
+class Sample {
+	Sample(String s1, String s2) {
+
+	}
+}
+
+To to make object of this class available for DI:
+
+@Configuration
+class MyConfig {
+
+	@Bean
+	Sample getSample() {
+		return new Sample("a","b");
+	}
+}
+
+===========
+
+class AnotherClass {
+	@Autowired
+	Sample s;
+
+===========================
+
+}
+
+========
+
+@Api
+@ApiOperation
+@ApiParameter
+....
 
 
+http://localhost:8080/swagger-ui.html
 
 
  
