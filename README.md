@@ -2371,8 +2371,282 @@ http://localhost:8080/api/products
 
 @ResponseBody ==> converts Java into representation based on "accept:application/json" header
 
+==============
+
+Day 6
+
+========
+
+Spring ==> Container
+
+* Dependency Injection ==> Wiring dependecncies based on metadata ==> XML / Annotations 
+* EAI 
+* Spring Data JPA to integrate with ORM [ Hibernate]
+
+Annotations:
+
+1) @Component
+2) @Respository [ not required if we use JPARepository interface]
+3) @Service
+4) @Controller
+5) @RestController
+6) @Configuration
+
+===
+Wiring dependencies is done using: @Autowired
+
+==
+
+@SpringBootApplication ==> spring boot entry point [ for standalone or Web application]
+
+=============
+
+@Profile / @Primary and @Qualifier ==> to resolve ambuqity to wire dependencies if more than one bean 
+qualifies to be wired
+
+===========================
+
+RESTful Web services:
+
+Java <--> JSON
+
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+* This dependency adds Embedded Tomcat Servlet engine instead of Jetty
+* Adds Jackson library  for java <--> JSON
+* adds servlet API
+* add DispatcherServlet ==> FrontController ==> url-pattern ==> *
+
+
+Status CODE:
+200 ==> OK
+201 ==> CREATED
+302 ==> REDIECTION
+400 ==> BAD REQUEST
+401 ==> UNAUTHORIZED
+404 ==> RESOURCE NOT FOUND
+500 ==> INTERNAL SERVER ERROR
+
+=============
+
+Install POSTMAN
+
+
+Browser:
+http://localhost:8080/api/products
+http://localhost:8080/api/products?low=1000&high=100000
+
+http://localhost:8080/api/products/3
 
 
 
+======
 
+Put:
+
+PUT  http://localhost:8080/api/products/4
+
+Body "raw"
+{
+    "price" : 990.99
+}
+
+=================
+
+Try CustomerController to get all customers and add customer [ GET and POST]
+
+=======================================================
+
+Customer ----- Orders ==> one customer can place many orders; many orders are placed by a customer
+
+Orders -- Items ; one order cna have many items; many items belong to a order
+
+Items -- Product; Many items can refer to a Product; Product can appear in many Item
+
+===============================================
+
+Aggregate Object ==> Order for Swiggy / Amazon;
+Aggregate Object ==> Trip for Uber / Ola / Meru
+
+=================
+
+Booking object will be aggregate for Meeting Room booking application
+
+======================================
+1) Many To one introduces FK in owning side ==> orders
+	@ManyToOne()
+	@JoinColumn(name="customer_email") // FK
+	private Customer customer;
+
+2) One To many introduces FK in child side
+	
+	@OneToMany()
+	@JoinColumn(name="order_fk") // FK
+	private List<Item> items = new ArrayList<>();
+
+	"order_fk" will appear in "items" table
+
+=========
+
+public interface OrderDao extends JPARepository<Order, Integer> {
+
+}
+
+public interface ItemDao extends JPARepository<Item, Integer> {
+	
+}
+
+
+Order has 3 items
+
+orderDao.save(order);
+itemDao.save(i1);
+itemDao.save(i2);
+itemDao.save(i3);
+
+===
+
+orderDao.delete(order);
+itemDao.delete(i1);
+itemDao.delete(i2);
+itemDao.delete(i3);
+
+=============
+
+CASCADE:
+@OneToMay(cascade = CascadeType.ALL)
+@JoinColumn(name="order_fk") // FK
+private List<Item> items = new ArrayList<>();
+
+Don;t create ItemDao interface
+
+Order has 10 items
+
+orderDao.save(order); ==> will save all child items
+No need for itemDAo.save(i1); itemDAo.save(i2); ...
+
+orderDao.delete(order); ==> will delete order and its items
+
+================
+
+EAGER AND LAZY fetching
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="order_fk") // FK
+	private List<Item> items = new ArrayList<>();
+
+orderDao.findById(1);
+
+select * from orders where id = 1;
+
+n + 1 problem
+
+===
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="order_fk") // FK
+	private List<Item> items = new ArrayList<>();
+
+orderDao.findById(1);
+
+internally it joins items table and gives orders and items 
+
+select * from orders o inner join items i on o.id = i.order_fk where o.id = 1 ;
+
+Bi-Directional relationalship
+
+	Item.java
+
+	@ManyToOne()
+	@JoinColumn(name="order_fk")
+	private Order order;
+
+
+	Order.java
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
+//	@JoinColumn(name="order_fk") // FK
+	private List<Item> items = new ArrayList<>();
+
+=============
+
+Order JSON from client :
+
+{
+
+	"customer" : {
+		"email" : "rita@adobe.com"
+	},
+	"items" : [
+		{"qty": 2,  "product" : {"id": 3}},
+		{"qty": 1, "product" : {"id": 2}}
+	]
+}
+
+
+	@Transactional
+	public Order placeOrder(Order order) {
+		List<Item> items = order.getItems();
+		double total = 0.0;
+		for(Item item : items) {
+			Product p = productDao.getById(item.getProduct().getId());
+			p.setQuantity(p.getQuantity() - item.getQty());
+			if(p.getQuantity() < 0) {
+				throw new RuntimeException("product not avaialble");
+			}
+			item.setPrice(item.getQty() * p.getPrice());
+			total += item.getPrice();
+		}
+		order.setTotal(total);
+		return orderDao.save(order);
+	}
+
+orderDao.save(order); // insert into orders table; insert into items table ==> cascade
+
+Product got mutated ==> product became dirty ==> JPA/ ORM does dirty checking ==> update SQL
+	==> no need for explicit UPDATE Query
+
+
+
+Product 
+	@Version
+	private int version;
+
+id  name price quatity version 
+3   A    566    100     1
+
+User 1
+	quantitiy  to 99
+	update product set quantity = 99, version = version + 1 where id = 3 and version = 0
+User 2
+	quantity to 99
+	update product set quantity = 99, version = version + 1 where id = 3 and version = 0
+
+================
+
+
+POSTMAN:
+
+POST  http://localhost:8080/api/orders
+
+Headers:
+Accept: application/json
+Content-type: application/json
+
+body ==> raw
+
+{
+	"customer" : {
+		"email" : "rita@adobe.com"
+	},
+	"items" : [
+		{"qty": 2,  "product" : {"id": 3}},
+		{"qty": 1, "product" : {"id": 2}}
+	]
+}
+
+SEND
 

@@ -12,7 +12,7 @@ import com.adobe.prj.service.OrderService;
 
 @SpringBootApplication
 public class OrderappApplication implements CommandLineRunner {
-	@Autowired
+	@Autowired(required = false)
 	private OrderService service;
 	
 	public static void main(String[] args) {
