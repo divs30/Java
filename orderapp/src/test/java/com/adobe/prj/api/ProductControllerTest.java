@@ -38,11 +38,10 @@ public class ProductControllerTest {
 
 	@Test
 	public void getProductsTest() throws Exception {
-		List<Product> products = 
-				Arrays.asList(new Product(1, "a", 500.00, 100), new Product(2, "b", 1500.00, 100));
+		List<Product> products = Arrays.asList(new Product(1, "a", 500.00, 100), new Product(2, "b", 1500.00, 100));
 		// mocking
 		when(service.getProducts()).thenReturn(products);
-
+		// https://jsonpath.com/
 		// @formatter:off
 		mockMvc.perform(get("/api/products"))
 				.andExpect(status().isOk())
@@ -52,20 +51,24 @@ public class ProductControllerTest {
 				.andExpect(jsonPath("$[1].id", is(2)))
 				.andExpect(jsonPath("$[1].name", is("b")));
 		// @formatter:on
+
 		verify(service, times(1)).getProducts();
 	}
 
 	@Test
 	public void addProductTest() throws Exception {
 		Product p = new Product(0, "b", 1500.00, 100);
-		Product p2 = new Product(1, "b", 1500.00, 100);
+//		Product p2 = new Product(1, "b", 1500.00, 100);
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(p); // get JSON for Product p
 
 		// mocking if Product type is passed to service he should return a PK 10
-		when(service.addProduct(Mockito.any(Product.class))).thenReturn(Mockito.any(Product.class));
+		when(service.addProduct(Mockito.any(Product.class)))
+			.thenReturn(Mockito.any(Product.class));
 
-		mockMvc.perform(post("/api/products").content(json).contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(post("/api/products")
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated());
 
 		verify(service, times(1)).addProduct(Mockito.any(Product.class));

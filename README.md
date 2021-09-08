@@ -2725,12 +2725,61 @@ class AnotherClass {
 @ApiParameter
 ....
 
-
 http://localhost:8080/swagger-ui.html
 
+===========================
 
-============
+Unit testing
+==> JUnit, TestNG
 
-Resume @ 4:15
+Unit testing to be done to RestControllers
 
- 
+ProductController ==> OrderService ==> ProductDao, CustomerDao, OrderDao ==> Database
+
+To test ProductController we need to mock OrderService
+
+If OrderService returns a data how controller returns json
+
+=======================
+
+Spring boot provides ==> Junit framework and Mockito for mocking apis
+
+Unit testing a Controller we don't need to load all classes into Spring Container;
+https://jsonpath.com/
+
+==========================
+JPA slides ==> more association mapping
+
+JWT => jwt.zip ==> example ==> Spring Security.ppt
+
+========================
+POST: http://localhost:8080/authenticate
+body
+
+    "username": "banu",
+    "password": "prakash"
+}
+
+Response:
+{
+    "jwt": "yJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW51IiwiZXhwIjoxNjMxMTQyMzcwLCJpYXQiOjE2MzExMDYzNzB9.8aasbbzw2_ISFJWt11-CHPR9nzO132HWgPAPy_xMRXk"
+}
+
+
+====
+
+GET http://localhost:8080/hello
+
+Header
+Authorization     Bearer yJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW51IiwiZXhwIjoxNjMxMTQyMzcwLCJpYXQiOjE2MzExMDYzNzB9.8aasbbzw2_ISFJWt11-CHPR9nzO132HWgPAPy_xMk
+
+====================
+Spring boot mockito mock jwt
+
+=================
+
+jwt + jdbcauth 
+
+=========================
+
+

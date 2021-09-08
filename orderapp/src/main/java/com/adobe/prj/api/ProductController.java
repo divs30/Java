@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adobe.prj.entity.Product;
 import com.adobe.prj.service.OrderService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 @RestController
 @RequestMapping("api/products")
 public class ProductController {
