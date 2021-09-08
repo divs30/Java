@@ -2,6 +2,8 @@ package com.adobe.prj.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +42,7 @@ public class ProductController {
 	// http://localhost:8080/api/products/5
 	// pathparam
 	@GetMapping("/{pid}")
-	public @ResponseBody Product getProduct(@PathVariable("pid") int id) {
+	public @ResponseBody Product getProduct(@PathVariable("pid") int id) throws NotFoundException {
 		return service.getProductById(id);
 	}
 	
@@ -50,14 +52,14 @@ public class ProductController {
 	// @RequestBody Product p ==> JSON from client payload is converted to Product 
 	@PostMapping()
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public @ResponseBody Product addProduct(@RequestBody Product p) {
+	public @ResponseBody Product addProduct(@Valid @RequestBody Product p) {
 		return service.addProduct(p);
 	}
 	
 	// PUT http://localhost:8080/api/products/5
 	// payload contains other fields
 	@PutMapping("/{pid}")
-	public @ResponseBody Product updateProduct(@PathVariable("pid") int id, @RequestBody Product p) {
+	public @ResponseBody Product updateProduct(@PathVariable("pid") int id, @RequestBody Product p)  throws NotFoundException{
 		service.updateProductPrice(p.getPrice(), id);
 		return service.getProductById(id);
 	}

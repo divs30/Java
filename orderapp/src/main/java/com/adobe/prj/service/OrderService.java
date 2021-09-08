@@ -1,12 +1,14 @@
 package com.adobe.prj.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adobe.prj.api.NotFoundException;
 import com.adobe.prj.dao.CustomerDao;
 import com.adobe.prj.dao.OrderDao;
 import com.adobe.prj.dao.ProductDao;
@@ -66,8 +68,13 @@ public class OrderService {
 		return productDao.save(p);
 	}
 	
-	public Product getProductById(int id) {
-		return productDao.findById(id).get();
+	public Product getProductById(int id) throws NotFoundException {
+		Optional<Product> prd =  productDao.findById(id);
+		if(prd.isPresent()) {
+			return prd.get();
+		} else {
+			throw new NotFoundException("Product with ID :" + id + " is not present!!!");
+		}
 	}
 	
 	public List<Product> productsByRange(double low, double high) {

@@ -2650,3 +2650,37 @@ body ==> raw
 
 SEND
 
+============================================
+
+Validation
+
+@Pattern(regexp="[a-zA-z]{3,10}", message="Name can't have numbers and special chars")
+private String name;
+* MethodArgumentNotValidException
+
+ Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.adobe.prj.entity.Product com.adobe.prj.api.ProductController.addProduct(com.adobe.prj.entity.Product) with 3 errors: 
+
+[Quantity -9 should be more than 0]
+[Name is required] 
+[Price -454.0 should be more than 10]] 
+
+{
+    "timestamp": "2021-09-08
+    T09:18:16.136+00:00",
+    "status": 400,
+    "error": "Bad Request",
+
+    "path": "/api/products"
+}
+
+================================
+
+Exceptions has to be caught and proper message needs to be sent to client
+
+GlobalExceptionHandler ==> Entire application class to handle exceptions and send proper message to client
+
+
+
+
+
+ 
